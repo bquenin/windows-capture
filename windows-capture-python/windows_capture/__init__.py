@@ -174,6 +174,7 @@ class WindowsCapture:
         dirty_region: Optional[bool] = None,
         monitor_index: Optional[int] = None,
         window_name: Optional[str] = None,
+        window_hwnd: Optional[int] = None,
     ) -> None:
         """
         Constructs All The Necessary Attributes For The WindowsCapture Object
@@ -196,8 +197,11 @@ class WindowsCapture:
                 Index Of The Monitor To Capture
             window_name : str
                 Name Of The Window To Capture
+            window_hwnd : int
+                Window Handle (HWND) for more reliable capture than window names
+                with dynamic titles (e.g., RetroArch showing FPS in title bar)
         """
-        if window_name is not None:
+        if window_name is not None or window_hwnd is not None:
             monitor_index = None
 
         self.frame_handler: Optional[types.FunctionType] = None
@@ -212,6 +216,7 @@ class WindowsCapture:
             dirty_region,
             monitor_index,
             window_name,
+            window_hwnd,
         )
 
     def start(self) -> None:
